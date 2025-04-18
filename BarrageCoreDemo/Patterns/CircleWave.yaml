@@ -1,0 +1,14 @@
+﻿id: circle-wave2
+
+bullets:
+  - id: circle
+    size: 1
+
+emitters:
+  - repeat: 15
+    bullet: circle
+    bulletSpeed: 600
+    bulletCount: 5
+    bulletLife: 3
+    shootDelay: 0.2
+    rotationSpeed: 6

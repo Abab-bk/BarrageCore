@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnuuyj8t1eqc2"]
+
+[ext_resource type="Script" uid="uid://3ac5macjv01j" path="res://Main.cs" id="1_glv2v"]
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_patternsOptionsBtn", "_spawnBtn", "_reloadBtn")]
+script = ExtResource("1_glv2v")
+_patternsOptionsBtn = NodePath("CanvasLayer/HBoxContainer/PatternsOptionsBtn")
+_spawnBtn = NodePath("CanvasLayer/HBoxContainer/SpawnBtn")
+_reloadBtn = NodePath("CanvasLayer/HBoxContainer/ReloadBtn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_right = 490.0
+offset_bottom = 40.0
+
+[node name="PatternsOptionsBtn" type="OptionButton" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpawnBtn" type="Button" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Spawn"
+
+[node name="ReloadBtn" type="Button" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Reload"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
