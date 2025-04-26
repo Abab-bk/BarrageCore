@@ -49,8 +49,12 @@ public class BarrageManager
         }
     }
 
-    public BarrageBullet NewBullet(BulletDef bulletDef, Emitter emitter) =>
-        new(bulletDef, emitter);
+    public BarrageBullet NewBullet(
+        BulletDef bulletDef,
+        Emitter emitter,
+        float initialAngle
+        ) =>
+        new(bulletDef, emitter, initialAngle);
     
     public void AddBulletToWorld(BarrageBullet bullet)
     {

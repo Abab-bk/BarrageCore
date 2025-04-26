@@ -5,9 +5,12 @@ namespace BarrageCore.Models;
 [YamlObject]
 public partial record EmitterDef(
     int Repeat,
+    float RepeatDelay,
     string Bullet,
     float BulletSpeed,
-    int BulletCount,
+    float AddedAngle,
+    float InitialAngle,
+    int ShootCount,
     float ShootDelay,
     float RotationSpeed,
     float BulletLife

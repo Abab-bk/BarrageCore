@@ -9,32 +9,54 @@ public class Emitter(
 {
     public EmitterDef EmitterDef => emitterDef;
 
-    private float _delayAccumulator;
+    private float _repeatDelayAccumulator;
+    private float _shootDelayAccumulator;
+
+    private int _shootCount;
     private int _emittedCount;
     
     public void Update(float delta)
     {
         if (_emittedCount >= emitterDef.Repeat) return;
-        
-        _delayAccumulator += delta;
-        
-        if (_delayAccumulator >= emitterDef.ShootDelay)
+
+        if (_shootCount >= emitterDef.ShootCount)
         {
-            SpawnBulletWave();
-            _delayAccumulator = 0;
-            _emittedCount++;
+            _repeatDelayAccumulator += delta;
+            if (_repeatDelayAccumulator >= emitterDef.RepeatDelay)
+            {
+                _emittedCount++;
+                _shootCount = 0;
+                _repeatDelayAccumulator = 0f;
+                _shootDelayAccumulator = 0f;
+            }
+            else return;
         }
         
+        _shootDelayAccumulator += delta;
+        var requiredDelay = _shootCount == 0 ? 0f : emitterDef.ShootDelay;
+
+        if (_shootCount < emitterDef.ShootCount &&
+            _shootDelayAccumulator >= requiredDelay
+            )
+        {
+            Shoot(EmitterDef.InitialAngle + 
+                  emitterDef.AddedAngle * _shootCount
+                  );
+            _shootCount++;
+            _shootDelayAccumulator -= requiredDelay;
+        }
+
         if (_emittedCount >= emitterDef.Repeat) BarrageManager.Instance?.RemoveEntity(this);
     }
 
-    private void SpawnBulletWave()
+    private void Shoot(float initialAngle)
     {
-        for (var i = 0; i < emitterDef.BulletCount; i++)
-        {
-            var bullet = BarrageManager.Instance?.NewBullet(bulletDef, this);
-            if (bullet == null) continue;
-            BarrageManager.Instance?.AddBulletToWorld(bullet);
-        }
+        var bullet = BarrageManager.Instance?.NewBullet(
+            bulletDef,
+            this,
+            initialAngle
+            );
+        if (bullet == null) return;
+        BarrageManager.Instance?.AddBulletToWorld(bullet);
     }
 }
